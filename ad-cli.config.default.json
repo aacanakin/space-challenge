@@ -1,0 +1,15 @@
+{
+    "note": "DO NOT MODIFY THIS FILE",
+    "paths": {
+        "components": {
+            "atoms": "<projectDir>/src/components/atoms",
+            "molecules": "<projectDir>/src/components/molecules",
+            "organisms": "<projectDir>/src/components/organisms",
+            "templates": "<projectDir>/src/components/templates",
+            "pages": "<projectDir>/src/components/pages"
+        },
+        "store": "<projectDir>/src/store",
+        "containers": "<projectDir>/src/containers",
+        "tests": "<projectDir>/__tests__"
+    }
+}
