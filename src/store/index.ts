@@ -1,3 +1,5 @@
+import { ResourceType } from "@models/Resource";
+import { initialResourceState, resourceReducer, resourceSaga, ResourceStoreState } from "@store/resource";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { createBrowserHistory } from "history";
 import { merge, throttle } from "lodash";
@@ -8,9 +10,7 @@ import { loadState, saveState } from "./utils";
 export const history = createBrowserHistory();
 
 export interface StoreState {
-    // TODO: Add your redux store keys here 
-    // Sample
-    // user: { email: string; name: string; };
+    resources: ResourceStoreState;
 }
 
 export function getInitialState(): StoreState {
@@ -18,9 +18,9 @@ export function getInitialState(): StoreState {
     const storageState = loadState();
 
     const memoryState: StoreState = {
-        // TODO: Add your initial memory state here
-        // Sample
-        // user: { name: "", email: "" },
+        resources: {
+            [ResourceType.LaunchItems]: initialResourceState()
+        }
     };
 
     // Merge memory state with storage state
@@ -30,15 +30,13 @@ export function getInitialState(): StoreState {
 
 export function rootReducer(state: StoreState, action: any) {
     return {
-        // TODO: Add your reducers here
-        // Sample
-        // user: userReducer(state.user, action)
+        resources: resourceReducer(state.resources, action)
     };
 }
 
 export function initStore(): Store<StoreState> {
 
-    const STORE_SAVE_INTERVAL = 500;
+    const STORE_SAVE_INTERVAL = 500; // in milliseconds
     const sagaMiddleware = createSagaMiddleware();
 
     const middlewares = [
@@ -64,10 +62,7 @@ export function initStore(): Store<StoreState> {
         }, STORE_SAVE_INTERVAL)
     );
 
-    // Saga
-    // TODO: Add your saga run statements here
-    // Sample
-    // sagaMiddleware.run(userSaga);
+    sagaMiddleware.run(resourceSaga);
 
     return store;
 }

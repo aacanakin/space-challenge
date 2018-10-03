@@ -29,6 +29,9 @@
       ],
       "@store/*": [
         "src/store/*"
+      ],
+      "@models/*": [
+        "src/models/*"
       ]
     }
   },
