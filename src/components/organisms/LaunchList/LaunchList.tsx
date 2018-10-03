@@ -8,6 +8,7 @@ import { List, Loader } from "semantic-ui-react";
 export interface LaunchListProps {
   resource: Resource<LaunchItem[]>;
   onItemClick: (item: LaunchItem) => void;
+  onDidMount: () => void;
 }
 
 export class LaunchList extends React.Component<LaunchListProps> {
@@ -18,11 +19,19 @@ export class LaunchList extends React.Component<LaunchListProps> {
     this.renderItems = this.renderItems.bind(this);
   }
 
+  public componentDidMount() {
+    this.props.onDidMount();
+  }
+
   public renderLoading() {
     const { isBusy } = this.props.resource;
     if (isBusy) {
       return (
-        <Loader />
+        <List.Item>
+          <List.Content>
+            <Loader active={true} inline="centered" />
+          </List.Content>
+        </List.Item>
       );
     }
 
@@ -51,8 +60,8 @@ export class LaunchList extends React.Component<LaunchListProps> {
           divided={true}
           verticalAlign="middle">
           {this.renderItems()}
+          {this.renderLoading()}
         </List>
-        {this.renderLoading()}
       </>
     );
   }

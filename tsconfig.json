@@ -32,6 +32,9 @@
       ],
       "@models/*": [
         "src/models/*"
+      ],
+      "@services": [
+        "src/services/index"
       ]
     }
   },
