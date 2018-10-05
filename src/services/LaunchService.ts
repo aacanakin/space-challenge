@@ -26,12 +26,11 @@ export class LaunchService {
             fields: fields.join(","),
             limit,
             offset,
-            startdate: start.format(DATE_FORMAT)
+            startdate: start.format(DATE_FORMAT),
+            sort: "desc"
         });
 
         const url = `${API_URL}/launch?${query}`;
-
-        console.log(url);
 
         return axios.default.get(url);
     }

@@ -1,4 +1,4 @@
-import { ResourceAction, ResourceFailed, ResourceSucceeded } from "./actions";
+import { ResourceAction, ResourceFailed, ResourceInit, ResourceSucceeded } from "./actions";
 import {
     RESOURCE_FAILED,
     RESOURCE_INIT,
@@ -17,12 +17,13 @@ export function resourceReducer(
     }
 
     const resourceType = action.payload.resourceType;
+    const resourceState = state[resourceType];
     switch (action.type) {
         case RESOURCE_REQUESTED:
             return {
                 ...state,
                 [resourceType]: {
-                    ...state[resourceType],
+                    ...resourceState,
                     error: undefined,
                     isBusy: true,
                 }
@@ -32,17 +33,25 @@ export function resourceReducer(
             return {
                 ...state,
                 [resourceType]: {
-                    data: state[resourceType].data,
+                    ...resourceState,
                     error,
                     isBusy: false,
                 }
             };
         case RESOURCE_SUCCEEDED:
-            const data = (action as ResourceSucceeded).payload.data;
+
+            const actionData = (action as ResourceSucceeded).payload.data; 
+            let data = resourceState.data;
+            if (Array.isArray(resourceState.data)) {
+                data.push(...actionData);
+            } else {
+                data = actionData;
+            }
+
             return {
                 ...state,
                 [resourceType]: {
-                    data, // TODO: append data with respect to configuration
+                    data,
                     error: undefined,
                     isBusy: false,
                 }
@@ -53,7 +62,7 @@ export function resourceReducer(
                 [resourceType]: {
                     data: undefined,
                     error: undefined,
-                    isBusy: false,
+                    isBusy: (action as ResourceInit).payload.isBusy || false,
                 }
             };
         }

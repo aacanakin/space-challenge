@@ -1,6 +1,7 @@
-import { LaunchItem } from "@models/LaunchItem";
+import { Launch } from "@models/Launch";
 import { requestHttpResource } from "@services";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { launchItemsSelectors } from "@store/launchItems";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { resourceFailed, ResourceRequested, resourceSucceeded } from "./actions";
 import { RESOURCE_REQUESTED } from "./constants";
 
@@ -14,12 +15,9 @@ export function* requestResource(action: ResourceRequested) {
                 ...action.payload.params
             }
         );
-
-        const launchItems: LaunchItem[] = response.data.launches.map((launch: any) => {
-            return new LaunchItem(launch);
-        });
-        console.log(launchItems);
-        yield put(resourceSucceeded(action.payload.resourceType, launchItems));
+        
+        const launches: Launch[] = launchItemsSelectors.getLaunchItems(response);
+        yield put(resourceSucceeded(action.payload.resourceType, launches));
     } catch (e) {
         console.error(e);
         yield put(resourceFailed(action.payload.resourceType, e));
@@ -27,5 +25,5 @@ export function* requestResource(action: ResourceRequested) {
 }
 
 export function* resourceSaga() {
-    yield takeEvery(RESOURCE_REQUESTED, requestResource);
+    yield takeLatest(RESOURCE_REQUESTED, requestResource);
 }

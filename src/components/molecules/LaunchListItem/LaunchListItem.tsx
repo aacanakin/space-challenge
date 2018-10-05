@@ -1,10 +1,11 @@
 
-import { LaunchItem } from '@models/LaunchItem';
+import { LaunchImage } from "@components";
+import { Launch } from '@models/Launch';
 import * as React from "react";
-import { Image, Label, List } from "semantic-ui-react";
+import { Header, Label, List } from "semantic-ui-react";
 
 export interface LaunchListItemProps {
-  item: LaunchItem;
+  item: Launch;
   onClick: () => void;
 }
 
@@ -15,10 +16,12 @@ export class LaunchListItem extends React.Component<LaunchListItemProps> {
     return (
       <List.Item onClick={this.props.onClick}>
         <List.Content floated="right">
-          <Label>{item.launchAt.toString()}</Label>
+          <Label>{item.launchAt}</Label>
         </List.Content>
-        <Image avatar={true} src={item.imageUrl} />
-        <List.Content>{item.name}</List.Content>
+        <LaunchImage url={item.image.url} imageSizes={item.image.sizes} />
+        <List.Content>
+          <Header>{item.name}</Header>
+        </List.Content>
       </List.Item>
     );
   }

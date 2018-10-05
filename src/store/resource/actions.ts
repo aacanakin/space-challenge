@@ -35,6 +35,7 @@ export interface ResourceInit {
     type: RESOURCE_INIT;
     payload: {
         resourceType: ResourceType;
+        isBusy: boolean;
     };
 }
 
@@ -70,10 +71,11 @@ export function resourceFailed(resourceType: ResourceType, error: Error): Resour
     };
 }
 
-export function resourceInit(resourceType: ResourceType): ResourceInit {
+export function resourceInit(resourceType: ResourceType, isBusy: boolean = true): ResourceInit {
     return {
         payload: {
-            resourceType
+            resourceType,
+            isBusy
         },
         type: RESOURCE_INIT
     };

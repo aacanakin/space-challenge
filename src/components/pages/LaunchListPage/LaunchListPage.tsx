@@ -8,7 +8,7 @@ export class LaunchListPage extends React.Component {
   public render() {
 
     return (
-      <Segment padded="very">
+      <Segment raised={true} padded={true}>
         <Label>Launch List</Label>
         <LaunchListContainer />
       </Segment>

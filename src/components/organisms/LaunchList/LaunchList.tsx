@@ -1,13 +1,16 @@
 
 import { LaunchListItem } from "@components";
-import { LaunchItem } from "@models/LaunchItem";
+import { Launch } from "@models/Launch";
 import { Resource } from "@models/Resource";
 import * as React from "react";
+import * as InfiniteScroll from "react-infinite-scroller";
 import { List, Loader } from "semantic-ui-react";
 
 export interface LaunchListProps {
-  resource: Resource<LaunchItem[]>;
-  onItemClick: (item: LaunchItem) => void;
+  hasMore: boolean;
+  resource: Resource<Launch[]>;
+  onItemClick: (item: Launch) => void;
+  onScroll: (offset: number, isBusy: boolean) => void;
   onDidMount: () => void;
 }
 
@@ -17,6 +20,7 @@ export class LaunchList extends React.Component<LaunchListProps> {
     super(props);
     this.renderLoading = this.renderLoading.bind(this);
     this.renderItems = this.renderItems.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   public componentDidMount() {
@@ -24,18 +28,13 @@ export class LaunchList extends React.Component<LaunchListProps> {
   }
 
   public renderLoading() {
-    const { isBusy } = this.props.resource;
-    if (isBusy) {
-      return (
-        <List.Item>
-          <List.Content>
-            <Loader active={true} inline="centered" />
-          </List.Content>
-        </List.Item>
-      );
-    }
-
-    return undefined;
+    return (
+      <List.Item key="item-loader">
+        <List.Content>
+          <Loader active={true} inline="centered" />
+        </List.Content>
+      </List.Item>
+    );
   }
 
   public renderItems() {
@@ -52,17 +51,27 @@ export class LaunchList extends React.Component<LaunchListProps> {
     });
   }
 
+  public onScroll() {
+    const data = this.props.resource.data || [];
+    const { isBusy } = this.props.resource;
+    this.props.onScroll(data.length, isBusy);
+  }
+
   public render() {
     return (
-      <>
+      <InfiniteScroll
+        key="infinite-scroll"
+        pageStart={0}
+        hasMore={this.props.hasMore}
+        loadMore={this.onScroll}
+        loader={this.renderLoading()}>
         <List
           selection={true}
           divided={true}
           verticalAlign="middle">
           {this.renderItems()}
-          {this.renderLoading()}
         </List>
-      </>
+      </InfiniteScroll>
     );
   }
 }

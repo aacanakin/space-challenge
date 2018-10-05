@@ -8,3 +8,5 @@ export const resourceApiMap = {
 export function requestHttpResource(resourceType: ResourceType, params: {[key: string]: any}) {
     return resourceApiMap[resourceType](params);
 }
+
+export * from "./LaunchService";

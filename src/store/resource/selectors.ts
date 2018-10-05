@@ -1,6 +1,14 @@
 import { ResourceType } from "./actions";
 import { ResourceStoreState } from "./state";
 
+export function getResource(resources: ResourceStoreState, resourceType: ResourceType) {
+    if (resources[resourceType]) {
+        return resources[resourceType];
+    }
+
+    return undefined;
+}
+
 export function getData(resources: ResourceStoreState, resourceType: ResourceType) {
     if (resources && resources[resourceType]) {
         return resources[resourceType].data;
