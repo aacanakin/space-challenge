@@ -38,3 +38,6 @@ npm test -- --coverage # to see coverage report
     - It should be only 1 request
 - LaunchImage
     - LaunchImage should lazily load images using an image loader library
+- Travis CI integration
+    - Build badge
+    - Code coverage badge
