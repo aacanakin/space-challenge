@@ -31,13 +31,15 @@ npm test -- --coverage # to see coverage report
 
 ## Future Improvements
 - More tests
-- LaunchDetailsPage & LaunchMissionDetailsPage should be unified with a mode option on container
+    - Generic resource store tests
+- `LaunchDetailsPage` & `LaunchMissionDetailsPage` should be unified with a mode option on container
 - Infinite scroll initially requests more than 1 request
     - offset: 0, count: 10,
     - offset: 10, count: 10
     - It should be only 1 request
-- LaunchImage
-    - LaunchImage should lazily load images using an image loader library
+- `LaunchImage`
+    - `LaunchImage` should lazily load images using an image loader library
 - Travis CI integration
     - Build badge
     - Code coverage badge
+- Componentize `LaunchMissionList` & `LaunchMissionListItem`
