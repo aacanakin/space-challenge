@@ -50,7 +50,7 @@ describe("Component -> LaunchList", () => {
     });
 
     it("should trigger on did mount", () => {
-        const wrapper = mount(<LaunchList {...listProps} />);
+        mount(<LaunchList {...listProps} />);
         expect(listProps.onDidMount).toHaveBeenCalled();
     });
 
