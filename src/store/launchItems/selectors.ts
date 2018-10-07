@@ -1,4 +1,4 @@
-import { Launch, LaunchDetails, LaunchStatus } from "@models/Launch";
+import { Launch, LaunchDetails, LaunchStatus, Mission } from "@models/Launch";
 import { Resource } from "@models/Resource";
 import * as moment from "moment";
 
@@ -39,6 +39,16 @@ export function getLaunchItems(response: any): Launch[] {
             launchAt = moment.unix(item.netstamp).format(DATE_FORMAT);
         }
 
+        const missions: Mission[] = [];
+        item.missions.map((mission: any) => {
+            missions.push({
+                id: mission.id,
+                name: mission.name,
+                description: mission.description,
+                type: mission.typeName
+            });
+        });
+
         return {
             id,
             name,
@@ -46,7 +56,8 @@ export function getLaunchItems(response: any): Launch[] {
             image: {
                 url: item.rocket.imageURL,
                 sizes: item.rocket.imageSizes
-            }
+            },
+            missions
         }
     });
 }

@@ -40,10 +40,13 @@ export class LaunchDetailsPage extends React.Component<LaunchDetailsPageProps> {
         <LaunchListItem item={launchDetails}>
           <>
             <Grid.Row>
-              <LaunchStatusBadge status={launchStatus} />
-            </Grid.Row>
-            <Grid.Row>
-              <Button onClick={this.props.onClickMissionDetails}>See Mission Details</Button>
+              <Grid.Column width={4}>
+                <LaunchStatusBadge status={launchStatus} />
+              </Grid.Column>
+              <Grid.Column width={8} />
+              <Grid.Column width={4}>
+                <Button onClick={this.props.onClickMissionDetails}>See Mission Details</Button>
+              </Grid.Column>
             </Grid.Row>
           </>
         </LaunchListItem>

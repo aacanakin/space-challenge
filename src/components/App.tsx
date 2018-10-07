@@ -1,5 +1,6 @@
 import { LaunchListPage } from "@components";
 import { LaunchDetailsPageContainer } from "@containers/LaunchDetailsPageContainer";
+import { LaunchMissionDetailsPageContainer } from "@containers/LaunchMissionDetailsPageContainer";
 import { history, initStore } from "@store";
 import { ConnectedRouter } from "connected-react-router";
 import * as React from "react";
@@ -18,6 +19,7 @@ export class App extends React.Component {
             <Switch>
               <Route exact={true} path="/" component={LaunchListPage} />
               <Route exact={true} path="/launch/:id" component={LaunchDetailsPageContainer} />
+              <Route exact={true} path="/launch/:id/missionDetails" component={LaunchMissionDetailsPageContainer} />
             </Switch>
           </ConnectedRouter>
         </>

@@ -5,11 +5,12 @@ export const API_URL = "https://launchlibrary.net/1.4";
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const DEFAULT_LIMIT = 10;
 
-export const DEFAULT_FIELDS = [
+export const DEFAULT_LAUNCH_FIELDS = [
     "name",
     "netstamp",
     "rocket",
-    "tbddate"
+    "tbddate",
+    "missions"
 ];
 
 export class LaunchService {
@@ -17,7 +18,7 @@ export class LaunchService {
     public static getLaunches(params: { [key: string]: any }) {
         const { start, end, offset } = params;
 
-        const fields = params.fields || DEFAULT_FIELDS;
+        const fields = params.fields || DEFAULT_LAUNCH_FIELDS;
         const limit = params.limit || DEFAULT_LIMIT;
 
         const query = qs.stringify({
@@ -35,7 +36,13 @@ export class LaunchService {
     }
 
     public static getLaunchDetails(params: { [key: string]: any }) {
-        const url = `${API_URL}/launch/${params.id}`;
+        const fields = params.fields || DEFAULT_LAUNCH_FIELDS;
+
+        const query = qs.stringify({
+            fields: fields.join(",")
+        });
+
+        const url = `${API_URL}/launch/${params.id}?${query}`;
         return axios.default.get(url);
     }
 

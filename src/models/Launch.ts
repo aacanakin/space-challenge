@@ -1,3 +1,9 @@
+export interface Mission {
+    id: number;
+    name: string;
+    description: string;
+    type: string;
+}
 
 export interface Launch {
     id: string;
@@ -7,6 +13,7 @@ export interface Launch {
         url: string;
         sizes: number[];
     };
+    missions: Mission[];
 }
 
 export interface LaunchStatus {
