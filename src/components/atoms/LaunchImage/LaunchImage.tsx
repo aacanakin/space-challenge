@@ -10,6 +10,7 @@ export interface LaunchImageProps {
 
 export interface LaunchImageState {
   isBusy: boolean;
+  isError: boolean;
 }
 
 export class LaunchImage extends React.Component<LaunchImageProps, LaunchImageState> {
@@ -17,25 +18,34 @@ export class LaunchImage extends React.Component<LaunchImageProps, LaunchImageSt
     super(props);
 
     this.state = {
-      isBusy: true
+      isBusy: true,
+      isError: false
     }
 
     this.onImageLoad = this.onImageLoad.bind(this);
-    this.renderLoading = this.renderLoading.bind(this);
+    this.onImageError = this.onImageError.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   public onImageLoad() {
     this.setState({
-      isBusy: false
+      isBusy: false,
+      isError: false
     });
   }
 
-  public renderLoading() {
-    const { isBusy } = this.state;
-    if (isBusy) {
+  public onImageError() {
+    this.setState({
+      isBusy: false,
+      isError: true
+    });
+  }
+
+  public renderError() {
+    const { isError } = this.state;
+    if (isError) {
       // TODO: Revisit this 
-      return <Image size="small" rounded={true} src="/placeholder.png" hidden={!isBusy} />;
-      // return <Loader active={true} inline={true} />;
+      return <Image size="small" rounded={true} src="/placeholder.png" />;
     }
     return undefined;
   }
@@ -51,8 +61,15 @@ export class LaunchImage extends React.Component<LaunchImageProps, LaunchImageSt
 
     return (
       <>
-        {this.renderLoading()}
-        <Image spaced="right" size="small" rounded={true} src={imageUrl} hidden={isBusy} onLoad={this.onImageLoad} />
+        {this.renderError()}
+        <Image
+          spaced="right"
+          size="small"
+          rounded={true}
+          src={imageUrl}
+          hidden={isBusy}
+          onError={this.onImageError}
+          onLoad={this.onImageLoad} />
       </>
     );
   }

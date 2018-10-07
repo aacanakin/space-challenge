@@ -6,6 +6,7 @@ import { DEFAULT_LIMIT } from "@services";
 import { StoreState } from "@store";
 import { launchItemsSelectors } from "@store/launchItems";
 import { resourceActions } from "@store/resource";
+import { push } from "connected-react-router";
 import * as moment from "moment";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -18,7 +19,7 @@ function mapStateToProps(state: StoreState): Partial<LaunchListProps> {
 }
 
 function mapDispatchToProps(
-    dispatch: Dispatch<resourceActions.ResourceAction>,
+    dispatch: Dispatch<resourceActions.ResourceAction>
 ): Partial<LaunchListProps> {
 
     const start = moment().add(-6, "months");
@@ -26,13 +27,19 @@ function mapDispatchToProps(
 
     return {
         onItemClick: (item: Launch) => {
-            console.log(item);
+            dispatch(push(`/launch/${item.id}`));
         },
         onDidMount: () => {
-            dispatch(resourceActions.resourceInit(
-                ResourceType.LaunchItems,
-                true
+            dispatch(resourceActions.resourceRequested(
+                ResourceType.LaunchItems, {
+                    start,
+                    end,
+                    offset: 0,
+                }
             ));
+        },
+        onWillUnmount: () => {
+            dispatch(resourceActions.resourceInit(ResourceType.LaunchItems));
         },
         onScroll: (offset: number, isBusy: boolean) => {
             if (!isBusy) {

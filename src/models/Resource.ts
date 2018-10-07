@@ -1,6 +1,8 @@
 
 export enum ResourceType {
-    LaunchItems = "launchItems"
+    LaunchItems = "launchItems",
+    LaunchDetails = "launchDetails",
+    LaunchStatus = "launchStatus"
 }
 
 export interface Resource<T> {

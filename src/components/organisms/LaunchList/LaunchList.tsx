@@ -12,6 +12,7 @@ export interface LaunchListProps {
   onItemClick: (item: Launch) => void;
   onScroll: (offset: number, isBusy: boolean) => void;
   onDidMount: () => void;
+  onWillUnmount: () => void;
 }
 
 export class LaunchList extends React.Component<LaunchListProps> {
@@ -25,6 +26,10 @@ export class LaunchList extends React.Component<LaunchListProps> {
 
   public componentDidMount() {
     this.props.onDidMount();
+  }
+
+  public componentWillUnmount() {
+    this.props.onWillUnmount();
   }
 
   public renderLoading() {
@@ -64,6 +69,7 @@ export class LaunchList extends React.Component<LaunchListProps> {
         pageStart={0}
         hasMore={this.props.hasMore}
         loadMore={this.onScroll}
+        initialLoad={false}
         loader={this.renderLoading()}>
         <List
           selection={true}

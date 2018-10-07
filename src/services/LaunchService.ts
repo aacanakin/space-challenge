@@ -15,7 +15,6 @@ export const DEFAULT_FIELDS = [
 export class LaunchService {
 
     public static getLaunches(params: { [key: string]: any }) {
-
         const { start, end, offset } = params;
 
         const fields = params.fields || DEFAULT_FIELDS;
@@ -32,6 +31,16 @@ export class LaunchService {
 
         const url = `${API_URL}/launch?${query}`;
 
+        return axios.default.get(url);
+    }
+
+    public static getLaunchDetails(params: { [key: string]: any }) {
+        const url = `${API_URL}/launch/${params.id}`;
+        return axios.default.get(url);
+    }
+
+    public static getLaunchStatus(params: { [key: string]: any}) {
+        const url =`${API_URL}/launchstatus/${params.id}`;
         return axios.default.get(url);
     }
 }

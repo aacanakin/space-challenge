@@ -19,7 +19,9 @@ export function getInitialState(): StoreState {
 
     const memoryState: StoreState = {
         resources: {
-            [ResourceType.LaunchItems]: initialResourceState()
+            [ResourceType.LaunchItems]: initialResourceState(),
+            [ResourceType.LaunchDetails]: initialResourceState(),
+            [ResourceType.LaunchStatus]: initialResourceState()
         }
     };
 
@@ -57,7 +59,7 @@ export function initStore(): Store<StoreState> {
             saveState({
                 // TODO: Add your stores which requires disk saving here
                 // Sample
-                // user: store.getState().user
+                // session: store.getState().session
             });
         }, STORE_SAVE_INTERVAL)
     );

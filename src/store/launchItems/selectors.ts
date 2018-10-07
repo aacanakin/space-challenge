@@ -1,8 +1,31 @@
-import { Launch } from "@models/Launch";
+import { Launch, LaunchDetails, LaunchStatus } from "@models/Launch";
 import { Resource } from "@models/Resource";
 import * as moment from "moment";
 
 export const DATE_FORMAT = "dddd, MMMM Do YYYY, h:mm:ss a";
+
+export function getLaunchDetails(response: any): LaunchDetails {
+    const launchItems: Launch[] = getLaunchItems(response);
+    const launchDetails: LaunchDetails = {
+        ...launchItems[0],
+        hashtag: response.data.launches[0].hashtag,
+        status: response.data.launches[0].status
+    }
+    return launchDetails;
+}
+
+export function getLaunchStatus(response: any): (LaunchStatus | undefined) {
+    console.log(response.data);
+    const status = response.data.types.length > 0 ? response.data.types[0] : undefined;
+    if (status) {
+        return {
+            name: status.name,
+            description: status.description
+        };
+    }
+
+    return undefined;
+}
 
 export function getLaunchItems(response: any): Launch[] {
 

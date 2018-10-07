@@ -1,8 +1,8 @@
-import * as React from "react";
-
 import { LaunchListPage } from "@components";
+import { LaunchDetailsPageContainer } from "@containers/LaunchDetailsPageContainer";
 import { history, initStore } from "@store";
 import { ConnectedRouter } from "connected-react-router";
+import * as React from "react";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 
@@ -17,6 +17,7 @@ export class App extends React.Component {
           <ConnectedRouter history={history}>
             <Switch>
               <Route exact={true} path="/" component={LaunchListPage} />
+              <Route exact={true} path="/launch/:id" component={LaunchDetailsPageContainer} />
             </Switch>
           </ConnectedRouter>
         </>
