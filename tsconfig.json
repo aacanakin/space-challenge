@@ -35,6 +35,9 @@
       ],
       "@services": [
         "src/services/index"
+      ],
+      "@app": [
+        "src/components/App"
       ]
     }
   },

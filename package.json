@@ -62,6 +62,8 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/enzyme": "^3.1.14",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/history": "^4.7.0",
     "@types/jest": "^23.1.4",
     "@types/lodash": "^4.14.115",
@@ -74,6 +76,8 @@
     "@types/react-router": "^4.0.31",
     "@types/uuid": "^3.4.4",
     "convert-tsconfig-paths-to-webpack-aliases": "^0.9.2",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "typescript": "^2.9.2"
   },
   "jest": {
@@ -83,6 +87,7 @@
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js",
     "testMatch": [
       "**/__tests__/**/*.ts?(x)",
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
@@ -101,9 +106,12 @@
     ],
     "moduleNameMapper": {
       "@components": "<rootDir>/src/components",
-      "@containers(.*)$": "<rootDir>/src/containers/$1",
+      "@containers/(.*)$": "<rootDir>/src/containers/$1",
+      "@models/(.*)$": "<rootDir>/src/models/$1",
       "@store/(.*)$": "<rootDir>/src/store/$1",
-      "@store": "<rootDir>/src/store/index"
+      "@store": "<rootDir>/src/store/index",
+      "@services": "<rootDir>/src/services/index",
+      "@app": "<rootDir>/src/components/App"
     },
     "moduleFileExtensions": [
       "web.ts",

@@ -1,7 +1,6 @@
 
 import * as React from "react";
 import { Image } from "semantic-ui-react";
-// import { Image, Loader } from "semantic-ui-react";
 
 export interface LaunchImageProps {
   url: string;
@@ -44,7 +43,6 @@ export class LaunchImage extends React.Component<LaunchImageProps, LaunchImageSt
   public renderError() {
     const { isError } = this.state;
     if (isError) {
-      // TODO: Revisit this 
       return <Image size="small" rounded={true} src="/placeholder.png" />;
     }
     return undefined;
@@ -52,7 +50,7 @@ export class LaunchImage extends React.Component<LaunchImageProps, LaunchImageSt
 
   public render() {
 
-    const { isBusy } = this.state;
+    const { isError } = this.state;
     const { url, imageSizes } = this.props;
 
     const smallestImageSize = imageSizes[0];
@@ -67,7 +65,7 @@ export class LaunchImage extends React.Component<LaunchImageProps, LaunchImageSt
           size="small"
           rounded={true}
           src={imageUrl}
-          hidden={isBusy}
+          hidden={isError}
           onError={this.onImageError}
           onLoad={this.onImageLoad} />
       </>
